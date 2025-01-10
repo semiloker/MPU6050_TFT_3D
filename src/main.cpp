@@ -14,14 +14,12 @@
 Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
 Adafruit_MPU6050 mpu;
 
-// Координати вершин куба
 float cube[8][3] = 
 {
   {-20, -20, -20}, {20, -20, -20}, {20, 20, -20}, {-20, 20, -20},
   {-20, -20, 20}, {20, -20, 20}, {20, 20, 20}, {-20, 20, 20}
 };
 
-// Ребра куба
 int edges[12][2] = 
 {
   {0, 1}, {1, 2}, {2, 3}, {3, 0},
@@ -39,7 +37,8 @@ void setup()
   tft.setCursor(10, 10);
   tft.print("Initializing...");
 
-  if (!mpu.begin()) {
+  if (!mpu.begin()) 
+  {
     tft.setTextColor(ST77XX_RED);
     tft.setCursor(10, 30);
     tft.print("MPU6050 Error!");
@@ -72,14 +71,12 @@ void drawCube(float rotationX, float rotationY, float lastTransformed[8][2])
     int start = edges[i][0];
     int end = edges[i][1];
 
-    // Стираємо старі лінії
     tft.drawLine(
       lastTransformed[start][0], lastTransformed[start][1],
       lastTransformed[end][0], lastTransformed[end][1],
       ST77XX_BLACK
     );
 
-    // Малюємо нові
     tft.drawLine(
       transformed[start][0], transformed[start][1],
       transformed[end][0], transformed[end][1],
